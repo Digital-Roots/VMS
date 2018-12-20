@@ -1,0 +1,20 @@
+{
+  "name": "volunteer",
+  "version": "1.0.0",
+  "description": "mangment system for volunteers",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js"
+  },
+  "author": "Robert Edwardes",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "connect-mongo": "^2.0.3",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "mongoose": "^5.4.0",
+    "pug": "^2.0.3"
+  }
+}
