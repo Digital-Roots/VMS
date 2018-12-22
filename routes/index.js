@@ -1,7 +1,7 @@
 const express = require('express');
-const router = express.router();
-const Staff = reqire('../models/staff');
-const Volunteer =  reqire('../models/volunteer');
+const router = express.Router();
+const Staff = require('../models/staff');
+const Volunteer =  require('../models/volunteer');
 const mid = require('../middleware');
 
 // LOGIN INDEX.pug
@@ -19,7 +19,7 @@ router.post('/', function(req, res, next){
           return next(err);
       }else{
         req.session.userId = user._id;
-        retunr res.redirect('/view');
+        return res.redirect('/view');
       }
     });
   }else{

@@ -18,7 +18,7 @@ const VolSchema = new mongoose.Schema({
     trim: true
   },
   region:{
-    type: Sting,
+    type: String,
     trim: true
   },
   parent:{
@@ -27,5 +27,5 @@ const VolSchema = new mongoose.Schema({
   }
 })
 
-let vol = mongooose.model('vol', VolSchema);
+let vol = mongoose.model('vol', VolSchema);
 module.exports = vol;

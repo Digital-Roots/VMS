@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bycrypt');
+const bcrypt = require('bcrypt');
 const StaffSchema = new mongoose.Schema({
   email:{
     type: String,
@@ -60,5 +60,5 @@ StaffSchema.pre('save', function(next){
 });
 
 
-let staff = mongooose.model('staff', StaffSchema);
+let staff = mongoose.model('staff', StaffSchema);
 module.exports = staff;
