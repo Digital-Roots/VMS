@@ -23,7 +23,7 @@ const StaffSchema = new mongoose.Schema({
     requiried: true
   },
   level:{
-    type: Number, default: '2',
+    type: Number,
     required: true,
     trim: true
   }

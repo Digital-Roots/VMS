@@ -24,13 +24,8 @@ const VolSchema = new mongoose.Schema({
   parent:{
     type: String,
     required: true
-  },
-  level:{
-    type: Number, default: '3',
-    required: true,
-    trim: true
   }
 })
 
-let vol = mongooose.model('admin', VolSchema);
+let vol = mongooose.model('vol', VolSchema);
 module.exports = vol;
