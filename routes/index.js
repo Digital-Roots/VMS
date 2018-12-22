@@ -6,7 +6,7 @@ const mid = require('../middleware');
 
 // LOGIN INDEX.pug
 
-router.get('/', mid.loggedOut, function(req, res, next){
+router.get('/',  function(req, res, next){
   return res.render('index');
 })
 
