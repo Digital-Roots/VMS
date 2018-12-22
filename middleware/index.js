@@ -11,7 +11,7 @@ function loggedIn(req, res, next){
   }
   const err = new Error('must be logged in to view this page');
   err.status = 401;
-  return next(err);
+  return res.redirect('/');
 }
 module.exports.loggedIn = loggedIn;
 module.exports.loggedOut = loggedOut;
