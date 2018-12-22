@@ -50,7 +50,7 @@ StaffSchema.statics.authenticate = function(email, password, callback){
 
 StaffSchema.pre('save', function(next){
   let staff = this;
-  bcrypt.hash(user.password, 10, function(err, hash){
+  bcrypt.hash(staff.password, 10, function(err, hash){
     if(err){
       return next(err);
     }

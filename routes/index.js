@@ -7,7 +7,7 @@ const mid = require('../middleware');
 // LOGIN INDEX.pug
 
 router.get('/',  function(req, res, next){
-  if(Staff !== 'collection'){
+  if(){
     return res.render('firstuser');
   }
   return res.render('index');
@@ -76,6 +76,7 @@ router.post('/firstuser', function(req, res, next){
 
   Staff.create(rootUser, function(error, staff){
     if(error){
+      console.log(error)
       return next(error)
     } else{
       req.session.userId = staff._id;
