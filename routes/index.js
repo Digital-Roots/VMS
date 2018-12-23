@@ -100,16 +100,15 @@ router.get('/profile', mid.loggedIn, function(req, res, next){
         }
       });
 });
-router.post('/profile', function(req, res, next){
+router.post('/edit-profile', function(req, res, next){
   let newData = {};
   if(req.body.name) newData.name = req.body.name;
   if(req.body.email) newData.email = req.body.email;
   if(req.body.phone) newData.phone = req.body.phone;
-  if(req.body.passwords) newData.password = req.body.passwords;
-  let id = staff._id;
-  Staff.findByIdAndUpdate(id, { $set: {newData}}, { new: true }, function (err, tank) {
+  let id = req.session.userId;
+  Staff.findOneAndUpdate(id, newData, { new: true }, function (err, staff) {
     if (err) return next(err);
-    res.send(staff);
+    res.redirect('/profile');
   });
 });
 
