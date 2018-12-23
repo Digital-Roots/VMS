@@ -6,27 +6,24 @@ const mid = require('../middleware');
 
 // LOGIN INDEX.pug
 
-router.get('/',  function(req, res, next){
-  if(){
-    return res.render('firstuser');
-  }
-  return res.render('index');
+router.get('/', mid.loggedOut, function(req, res, next){
+  return res.render('index', {title: 'Login'});
 })
 
-router.post('/', function(req, res, next){
-  if(req.body.email && req.body.password){
-    Staff.authenticate(req.body.email, req.body.password, function(error, user){
-      if(error || !user){
-        let err = new Error('wrong password or email');
+router.post('/', function(req, res, next) {
+  if (req.body.email && req.body.password) {
+    Staff.authenticate(req.body.email, req.body.password, function (error, staff) {
+      if (error || !staff) {
+        var err = new Error('Wrong email or password.');
         err.status = 401;
         return next(err);
-      }else{
-        req.session.userId = user._id;
+      }  else {
+        req.session.userId = staff._id;
         return res.redirect('/view');
       }
     });
-  }else{
-    let err = new Error('wrong password or email');
+  } else {
+    var err = new Error('Email and password are required.');
     err.status = 401;
     return next(err);
   }
@@ -34,26 +31,11 @@ router.post('/', function(req, res, next){
 
 // GET LIST
 router.get('/view', mid.loggedIn, function(req, res, next){
-  return res.render('view');
+  return res.render('view', {title: 'Member List'});
 })
 router.get('/addnew', mid.loggedIn, function(req, res, next){
-  return res.render('addnew');
+  return res.render('addnew', {title: 'Add New Person'});
 })
-router.get('/profile', mid.loggedIn, function(req, res, next){
-  return res.render('profile', {Name: staff.name, email: staff.email, phone: staff.phone, password: staff.password});
-})
-router.post('/profile', function(req, res, next){
-  let newData = {};
-  if(req.body.name) newData.name = req.body.name;
-  if(req.body.email) newData.email = req.body.email;
-  if(req.body.phone) newData.phone = req.body.phone;
-  if(req.body.passwords) newData.password = req.body.passwords;
-  let id = staff._id;
-  Staff.findByIdAndUpdate(id, { $set: {newData}}, { new: true }, function (err, tank) {
-    if (err) return next(err);
-    res.send(staff);
-  });
-});
 
 router.post('/firstuser', function(req, res, next){
   if(req.body.name &&
@@ -90,5 +72,47 @@ router.post('/firstuser', function(req, res, next){
     return next(err);
   }
 });
+
+router.get('/logout', function(req, res, next){
+  if(req.session){
+    req.session.destroy(function(err){
+      if(err){
+        return next(err);
+      } else{
+        return res.redirect('/');
+      }
+    });
+  }
+});
+router.get('/firstuser', function(req, res, next){
+  return res.render('firstuser');
+})
+
+// Profile Page
+
+router.get('/profile', mid.loggedIn, function(req, res, next){
+  Staff.findById(req.session.userId)
+      .exec(function(error, staff){
+        if(error){
+          return next(error);
+        } else{
+          return res.render('profile', {name: staff.name, email: staff.email, phone: staff.phone, password: staff.password});
+        }
+      });
+});
+router.post('/profile', function(req, res, next){
+  let newData = {};
+  if(req.body.name) newData.name = req.body.name;
+  if(req.body.email) newData.email = req.body.email;
+  if(req.body.phone) newData.phone = req.body.phone;
+  if(req.body.passwords) newData.password = req.body.passwords;
+  let id = staff._id;
+  Staff.findByIdAndUpdate(id, { $set: {newData}}, { new: true }, function (err, tank) {
+    if (err) return next(err);
+    res.send(staff);
+  });
+});
+
+
 
 module.exports = router;

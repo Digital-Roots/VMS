@@ -28,37 +28,37 @@ const StaffSchema = new mongoose.Schema({
     trim: true
   }
 })
-StaffSchema.statics.authenticate = function(email, password, callback){
-  staff.findOne({email: email})
-      .exec(function(error, user){
-        if(error){
+StaffSchema.statics.authenticate = function(email, password, callback) {
+  Staff.findOne({ email: email })
+      .exec(function (error, user) {
+        if (error) {
           return callback(error);
-        }else if(!user){
-          let err = new Error('User not found');
+        } else if ( !user ) {
+          var err = new Error('User not found.');
           err.status = 401;
           return callback(err);
         }
-        bcrypt.compare(password, User.password, function(error, result){
-          if(result === true){
+        bcrypt.compare(password, user.password , function(error, result) {
+          if (result === true) {
             return callback(null, user);
-          } else{
+          } else {
             return callback();
           }
         })
-      })
+      });
 }
 
-StaffSchema.pre('save', function(next){
+StaffSchema.pre('save', function(next) {
   let staff = this;
-  bcrypt.hash(staff.password, 10, function(err, hash){
-    if(err){
+  bcrypt.hash(staff.password, 10, function(err, hash) {
+    if (err) {
       return next(err);
     }
     staff.password = hash;
-    next()
+    next();
   })
 });
 
 
-let staff = mongoose.model('staff', StaffSchema);
-module.exports = staff;
+let Staff = mongoose.model('staff', StaffSchema);
+module.exports = Staff;

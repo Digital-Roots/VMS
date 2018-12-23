@@ -7,10 +7,10 @@ block content
         h1.display-4.m-b-2 Your Profile
           form(method='POST' action='/edit-profile')
             div.form-group
-              label(for='name') Current Name: #{Name}
+              label(for='name') Current Name: #{name}
               input#name.form-control(type='text', placehoder= 'New Name First and Last' name ='name')
             div.form-group
-              label(for='name') Current Password: #{Password}
+              label(for='name') Current Password: #{password}
               input#pw.form-control(type='text', placehoder= 'New Password' name ='Password')
             div.form-group
               label(for='name') Current Phone Number: #{phone}
