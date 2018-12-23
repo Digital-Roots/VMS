@@ -10,7 +10,7 @@ router.get('/', mid.loggedOut, function(req, res, next){
   return res.render('index', {title: 'Login'});
 })
 
-router.post('/', function(req, res, next) {
+router.post('/login', function(req, res, next) {
   if (req.body.email && req.body.password) {
     Staff.authenticate(req.body.email, req.body.password, function (error, staff) {
       if (error || !staff) {

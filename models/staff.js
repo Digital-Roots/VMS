@@ -30,17 +30,17 @@ const StaffSchema = new mongoose.Schema({
 })
 StaffSchema.statics.authenticate = function(email, password, callback) {
   Staff.findOne({ email: email })
-      .exec(function (error, user) {
+      .exec(function (error, staff) {
         if (error) {
           return callback(error);
-        } else if ( !user ) {
+        } else if ( !staff ) {
           var err = new Error('User not found.');
           err.status = 401;
           return callback(err);
         }
-        bcrypt.compare(password, user.password , function(error, result) {
+        bcrypt.compare(password, staff.password , function(error, result) {
           if (result === true) {
-            return callback(null, user);
+            return callback(null, staff);
           } else {
             return callback();
           }
