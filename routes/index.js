@@ -96,7 +96,7 @@ router.get('/profile', mid.loggedIn, function(req, res, next){
         if(error){
           return next(error);
         } else{
-          return res.render('profile', {name: staff.name, email: staff.email, phone: staff.phone, password: staff.password});
+          return res.render('profile', {name: staff.name, email: staff.email, phone: staff.phone});
         }
       });
 });

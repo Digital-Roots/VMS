@@ -5,7 +5,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const app = express();
 
-mongoose.connect("mongodb://localhost:27017/volunteer");
+mongoose.connect("mongodb://localhost:27017/volunteer", { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection errors'))

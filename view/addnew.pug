@@ -1,3 +1,22 @@
 extends layout
 
 block content
+
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h1.display-4.m-b-2 New Volunteer
+        form(method='POST' action='/newAdd')
+          div.form-group
+            label(for='name') Name:
+            input#name.form-control(type='text', placeholder='first and last' name='name')
+          div.form-group
+            label(for='email') Email:
+            input#email.form-control(type='email', placeholder='name@email.com' name='email')
+          div.form-group
+            label(for='phone') Phone Number:
+            input#phone.form-control(type='text', placeholder='(555) 555-5555' name='phone')
+          div.form-group
+            label(for='region') Region:
+            input#region.form-control(type='text' name='region')
+          button.btn.btn-primary(type='submit') Add Voluntter
