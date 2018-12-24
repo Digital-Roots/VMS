@@ -34,8 +34,15 @@ router.post('/login', function(req, res, next) {
 // VIEW members and volunteers
 //TODO: add update, delete, sort, different admin levels
 router.get('/view', mid.loggedIn, function(req, res, next){
-  return res.render('view', {title: 'Member List'});
+  const id = req.session.userId;
+  Volunteer.find({parent: id})
+    .exec((err, staff) => {
+      res.render('view', {staffs: staff});
+    });
 })
+
+
+
 
 // ADD NEW documents
 // todo none
@@ -102,7 +109,7 @@ router.post('/addvol', function(req, res, next){
       phone: req.body.phone,
       name: req.body.name,
       region: req.body.region,
-      parent: req.session.id
+      parent: req.body.parent
     };
 
 
