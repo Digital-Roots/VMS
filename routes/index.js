@@ -191,7 +191,7 @@ router.get('/firstuser',  function(req, res, next){
 
 
 // Profile GET and POST
-// TODO: css layout ADD password change
+// TODO: password change
 
 router.get('/profile', mid.loggedIn, function(req, res, next){
   Staff.findById(req.session.userId)
