@@ -22,10 +22,9 @@ const StaffSchema = new mongoose.Schema({
     type: String,
     requiried: true
   },
-  level:{
-    type: Number,
-    required: true,
-    trim: true
+  admin:{
+    type: Boolean,
+    required: true
   }
 })
 StaffSchema.statics.authenticate = function(email, password, callback) {

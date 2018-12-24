@@ -5,6 +5,7 @@ const Volunteer =  require('../models/volunteer');
 const mid = require('../middleware');
 
 // LOGIN INDEX.pug
+// TODO: redirct to first user when there are zero documents in staffs collection
 
 router.get('/', mid.loggedOut, function(req, res, next){
   return res.render('index', {title: 'Login'});
@@ -29,13 +30,78 @@ router.post('/login', function(req, res, next) {
   }
 });
 
-// GET LIST
+
+// VIEW members and volunteers
+//TODO: add update, delete, sort, different admin levels
 router.get('/view', mid.loggedIn, function(req, res, next){
   return res.render('view', {title: 'Member List'});
 })
+
+// ADD NEW documents
+// todo finish with events
 router.get('/addnew', mid.loggedIn, function(req, res, next){
-  return res.render('addnew', {title: 'Add New Person'});
+  const id = req.session.userId;
+  Staff.findById(id).exec(function(error, staff){
+    if(error){
+      return next(error);
+    }else{
+      return res.render('addnew', {title: 'Add New Person', admin: staff.admin, parent: id});
+    }
+  });
 })
+router.post('/addstaff', function(req,res,next){
+  if(req.body.name &&
+     req.body.phone &&
+     req.body.email &&
+     req.body.password &&
+     req.body.confirmPassword){
+
+      if( req.body.password !== req.body.confirmPassword){
+
+        const err = new Error('Passwords do not match');
+        err.status = 400;
+        return next(err);
+
+      }
+
+      let staffData = {
+
+        email: req.body.email,
+        phone: req.body.phone,
+        name: req.body.name,
+        password: req.body.password,
+        admin: req.body.admin
+
+      };
+
+      Staff.create(staffData, function(error, user){
+        if(error){
+          return next(error);
+        } else{
+          return res.redirect('/view');
+        }
+      });
+
+    } else {
+      const err = new Error('All fields required.');
+      err.status = 400;
+      return next(err);
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// INIT page todo:
+// auto redirct from index when there isn't any documents in staffs collection
 
 router.post('/firstuser', function(req, res, next){
   if(req.body.name &&
@@ -53,7 +119,7 @@ router.post('/firstuser', function(req, res, next){
     name: req.body.name,
     phone: req.body.phone,
     password: req.body.password,
-    level: 1
+    admin: true
   };
 
   Staff.create(rootUser, function(error, staff){
@@ -84,11 +150,16 @@ router.get('/logout', function(req, res, next){
     });
   }
 });
+
 router.get('/firstuser', function(req, res, next){
   return res.render('firstuser');
 })
 
-// Profile Page
+
+
+
+// Profile GET and POST
+// TODO: css layout ADD password change
 
 router.get('/profile', mid.loggedIn, function(req, res, next){
   Staff.findById(req.session.userId)
@@ -96,7 +167,7 @@ router.get('/profile', mid.loggedIn, function(req, res, next){
         if(error){
           return next(error);
         } else{
-          return res.render('profile', {name: staff.name, email: staff.email, phone: staff.phone});
+          return res.render('profile', {name: staff.name, email: staff.email, phone: staff.phone, title: 'profile'});
         }
       });
 });
@@ -111,7 +182,5 @@ router.post('/edit-profile', function(req, res, next){
     res.redirect('/profile');
   });
 });
-
-
 
 module.exports = router;
