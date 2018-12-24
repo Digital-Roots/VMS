@@ -9,14 +9,29 @@ block content
           th Phone
           th Region  
           th(colspan='2') options
-          each staff in staffs
+          each vol in vols
             tr
-              td #{staff.name}
-              td #{staff.email}
-              td #{staff.phone}
-              td #{staff.region}
-              td edit
-              td delete
-          
-          
-      
+              td #{vol.name}
+              td #{vol.email}
+              td #{vol.phone}
+              td #{vol.region}
+              td
+                form(method='POST' action='/delete')
+                  button.remove-doc.btn.btn-danger.col-xs-12(type="submit" data-id=vol._id) Delete
+              td
+                form(method='POST' action='/edit')
+                  button.remove-doc.btn.btn-info.col-xs-12(type="submit" data-id=vol._id) Edit
+          if admin  
+            each staff in staffs
+              tr
+                td #{staff.name}
+                td #{staff.email}
+                td #{staff.phone}
+                td #{staff.region}
+                td
+                  form(method='POST' action='/delete')
+                    button.remove-doc.btn.btn-danger.col-xs-12(type="submit" data-id=staff._id) Delete
+                td
+                  form(method='POST' action='/edit')
+                    button.remove-doc.btn.btn-info.col-xs-12(type="submit" data-id=staff._id) Edit
+        

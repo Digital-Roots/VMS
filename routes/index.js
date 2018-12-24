@@ -32,17 +32,34 @@ router.post('/login', function(req, res, next) {
 
 
 // VIEW members and volunteers
-//TODO: add update, delete, sort, different admin levels
+//TODO: add update, sort
 router.get('/view', mid.loggedIn, function(req, res, next){
   const id = req.session.userId;
-  Volunteer.find({parent: id})
-    .exec((err, staff) => {
-      res.render('view', {staffs: staff});
+  Staff.findById(id)
+    .exec((err, staff)=>{
+      if(staff.admin){
+        Staff.find()
+          .exec((err, vol) => {
+            res.render('view', {staffs: staff});
+          });
+      }
     });
-})
+  Volunteer.find({parent: id})
+    .exec((err, vol) => {
+      res.render('view', {vols: vol});
+    });
+});
 
 
+router.post('/delete', function(req, res, next) {
+   let userId = req.body.userId || req.query.userId;
+   Volunteer.deleteOne({_id: userId}, function(err, res) {
+       if (err) { res.json({"err": err});
 
+   }
+ });
+ res.redirect('view');
+});
 
 // ADD NEW documents
 // todo none
@@ -209,10 +226,11 @@ router.post('/edit-profile', function(req, res, next){
   if(req.body.email) newData.email = req.body.email;
   if(req.body.phone) newData.phone = req.body.phone;
   let id = req.session.userId;
-  Staff.findOneAndUpdate(id, newData, { new: true }, function (err, staff) {
-    if (err) return next(err);
-    res.redirect('/profile');
-  });
+
+    Staff.findOneAndUpdate(id, newData, { new: true }, function (err, staff) {
+      if (err) return next(err);
+      res.redirect('/profile');
+    });
 });
 
 
