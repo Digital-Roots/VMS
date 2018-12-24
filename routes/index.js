@@ -5,7 +5,7 @@ const Volunteer =  require('../models/volunteer');
 const mid = require('../middleware');
 
 // LOGIN INDEX.pug
-// TODO: redirct to first user when there are zero documents in staffs collection
+// TODO: none
 
 router.get('/', mid.loggedOut, function(req, res, next){
   return res.render('index', {title: 'Login'});
@@ -38,7 +38,7 @@ router.get('/view', mid.loggedIn, function(req, res, next){
 })
 
 // ADD NEW documents
-// todo finish with events
+// todo none
 router.get('/addnew', mid.loggedIn, function(req, res, next){
   const id = req.session.userId;
   Staff.findById(id).exec(function(error, staff){
@@ -74,7 +74,7 @@ router.post('/addstaff', function(req,res,next){
 
       };
 
-      Staff.create(staffData, function(error, user){
+      Staff.create(staffData, function(error, staff){
         if(error){
           return next(error);
         } else{
@@ -89,6 +89,38 @@ router.post('/addstaff', function(req,res,next){
     }
 });
 
+router.post('/addvol', function(req, res, next){
+  if(
+    req.body.name &&
+    req.body.email &&
+    req.body.phone &&
+    req.body.region
+  ){
+
+    let voulunteerData = {
+      email: req.body.email,
+      phone: req.body.phone,
+      name: req.body.name,
+      region: req.body.region,
+      parent: req.session.id
+    };
+
+
+    Volunteer.create(voulunteerData, function(error, vol){
+      if(error){
+        return next(error);
+      }else{
+        return res.redirect('/view');
+      }
+    });
+
+  }else{
+    const err = new Error('All fields needed');
+    err.status = 400;
+    return next(err);
+  }
+
+});
 
 
 
@@ -99,9 +131,8 @@ router.post('/addstaff', function(req,res,next){
 
 
 
-
-// INIT page todo:
-// auto redirct from index when there isn't any documents in staffs collection
+// INIT page
+// todo: none
 
 router.post('/firstuser', function(req, res, next){
   if(req.body.name &&
@@ -139,20 +170,14 @@ router.post('/firstuser', function(req, res, next){
   }
 });
 
-router.get('/logout', function(req, res, next){
-  if(req.session){
-    req.session.destroy(function(err){
-      if(err){
-        return next(err);
-      } else{
-        return res.redirect('/');
-      }
-    });
-  }
-});
-
-router.get('/firstuser', function(req, res, next){
-  return res.render('firstuser');
+router.get('/firstuser',  function(req, res, next){
+  Staff.countDocuments(function(err, count){
+    if(count > 0){
+      return res.redirect('/');
+    }else{
+      return res.render('firstuser');
+    }
+  })
 })
 
 
@@ -181,6 +206,21 @@ router.post('/edit-profile', function(req, res, next){
     if (err) return next(err);
     res.redirect('/profile');
   });
+});
+
+
+//LogOut
+// TODO: none
+router.get('/logout', function(req, res, next){
+  if(req.session){
+    req.session.destroy(function(err){
+      if(err){
+        return next(err);
+      } else{
+        return res.redirect('/');
+      }
+    });
+  }
 });
 
 module.exports = router;
