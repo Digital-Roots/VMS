@@ -1,9 +1,36 @@
 
 /* Base Styles */
 
+#viewList {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#viewList td{
+	color: white;
+}
+
+#viewList td, #viewList th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#viewList tr:nth-child(even){background-color: grey;}
+
+#viewList tr:hover {background-color: #ddd;}
+
+#viewList th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
 body {
 	background: #1d2a33 url('../images/bg.jpg') no-repeat;
-	background-size: cover; 
+	background-size: cover;
 }
 
 a:hover {
@@ -70,7 +97,7 @@ a:hover {
 	background: rgba(255,255,255, .12);
 }
 .btn-light:hover {
-	background: rgba(255,255,255, .2);	
+	background: rgba(255,255,255, .2);
 }
 .active,
 .btn {
@@ -139,7 +166,7 @@ a:hover {
 	}
 }
 
-@media (min-width: 48em) { 
+@media (min-width: 48em) {
 	.navbar {
 		min-height: 70px;
 	}
@@ -155,4 +182,3 @@ a:hover {
 		padding-top: 8rem;
 	}
 }
-

@@ -2,9 +2,21 @@ extends layout
 block content
   .main.container
     .row
-      .col-md-6.col-md-offset-3
-        each staff in staffs
-          p #{staff.name}
+      .col-md-12
+        table#viewList
+          th Name
+          th Email
+          th Phone
+          th Region  
+          th(colspan='2') options
+          each staff in staffs
+            tr
+              td #{staff.name}
+              td #{staff.email}
+              td #{staff.phone}
+              td #{staff.region}
+              td edit
+              td delete
           
           
       

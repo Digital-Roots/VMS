@@ -6,7 +6,7 @@ block content
     .row
       .col-md-6.col-md-offset-3
         if admin
-          h1.display-4.m-b-2 Add Staff member
+          h1.display-6.m-b-2 Add Staff member
           form(method='POST' action='/addstaff')
             div.form-group
               label(for='name') Name:
@@ -29,7 +29,7 @@ block content
                   option(value='true') Admin
                   option( value='false') Staff
             button.btn.btn-primary(type='submit') Add Staff
-        h1.display-4.m-b-2 New Volunteer
+        h1.display-6.m-b-2 New Volunteer
         form(method='POST' action='/addvol')
           div.form-group
             label(for='name') Name:

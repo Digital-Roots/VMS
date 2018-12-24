@@ -5,14 +5,14 @@ block content
     .row
       .col-md-9
         h1.display-4.m-b-2 Your Profile
-          form(method='POST' action='/edit-profile')
-            div.form-group
-              label(for='name') Current Name: #{name}
-              input#name.form-control(type='text', placehoder= 'New Name First and Last' name ='name')
-            div.form-group
-              label(for='name') Current Phone Number: #{phone}
-              input#phone.form-control(type='text', placehoder= 'New Phone Number' name ='Phone')
-            div.form-group
-              label(for='name') Current Email: #{email}
-              input#email.form-control(type='text', placehoder= 'New Name First and Last' name ='email')
-            button.btn.btn-primary(type='submit') Update Profile
+        form(method='POST' action='/edit-profile')
+          div.form-group
+            label(for='name') Current Name: #{name}
+            input#name.form-control(type='text', placehoder= 'New Name First and Last' name ='name')
+          div.form-group
+            label(for='name') Current Phone Number: #{phone}
+            input#phone.form-control(type='text', placehoder= 'New Phone Number' name ='Phone')
+          div.form-group
+            label(for='name') Current Email: #{email}
+            input#email.form-control(type='text', placehoder= 'New Name First and Last' name ='email')
+          button.btn.btn-primary(type='submit') Update Profile
