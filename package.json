@@ -4,7 +4,7 @@
   "description": "mangment system for volunteers",
   "main": "app.js",
   "scripts": {
-    "start": "node ./app.js"
+    "start": "node app.js"
   },
   "author": "Robert Edwardes",
   "license": "MIT",
