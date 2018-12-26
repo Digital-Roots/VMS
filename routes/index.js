@@ -147,15 +147,6 @@ router.post('/addstaff', function(req,res,next){
 
   });
 
-
-
-
-
-
-
-
-
-
   // INIT page
   // todo: none
 

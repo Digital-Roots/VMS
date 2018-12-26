@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const app = express();
+const port = process.env.PORT || 8080;
 
 mongoose.connect("mongodb://localhost:27017/volunteer", { useNewUrlParser: true });
 const db = mongoose.connection;
@@ -49,6 +50,6 @@ app.use(function(err, req, res, next){
   });
 });
 
-app.listen(3000, function(){
-  console.log('Express app listening on port 3000')
+app.listen(port, function(){
+  console.log('Express app listening on ', port);
 })
