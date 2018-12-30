@@ -5,6 +5,9 @@
   "main": "app.js",
   "author": "Robert Edwardes",
   "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
