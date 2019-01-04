@@ -195,7 +195,11 @@ router.post('/addstaff', function(req,res,next){
           return res.render('firstuser');
         }
       })
+<<<<<<< HEAD
     });
+=======
+    })
+>>>>>>> parent of f4654a4... 503 error work around
 
 
 
