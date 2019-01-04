@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const mongooseToCsv = require('mongoose-to-csv');
 const StaffSchema = new mongoose.Schema({
   email:{
     type: String,
@@ -56,6 +57,16 @@ StaffSchema.pre('save', function(next) {
     staff.password = hash;
     next();
   })
+});
+
+StaffSchema.plugin(mongooseToCsv,{
+  headers: 'Name Phone  Email Region',
+  constraints:{
+    'Name': 'name',
+    'Phone': 'phone',
+    'Email': 'email',
+    'Region': 'region'
+  }
 });
 
 
