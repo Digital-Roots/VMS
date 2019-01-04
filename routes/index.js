@@ -10,7 +10,7 @@ const mid = require('../middleware');
 
 router.get('/', mid.loggedOut, function(req, res, next){
   return res.render('index', {title: 'Login'});
-})
+});
 
 router.post('/login', function(req, res, next) {
   if (req.body.email && req.body.password) {
@@ -50,7 +50,7 @@ router.get('/view', mid.loggedIn, function(req, res, next){
       res.render('view', {vols: vol});
     });
   }
-})
+});
 
 
 router.post('/delete', function(req, res, next) {
@@ -195,12 +195,7 @@ router.post('/addstaff', function(req,res,next){
           return res.render('firstuser');
         }
       })
-<<<<<<< HEAD
     });
-=======
-    })
->>>>>>> parent of f4654a4... 503 error work around
-
 
 
 
