@@ -194,8 +194,8 @@ router.post('/addstaff', function(req,res,next){
         }else{
           return res.render('firstuser');
         }
+      })
     });
-
 
 
 
