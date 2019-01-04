@@ -3,6 +3,9 @@ block content
   .main.container
     .row
       .col-md-12
+        header
+          form(method='POST' action='/export')
+            button.btn.btn-info.col-xs-12 Export
         table#viewList
           th Name
           th Email
@@ -18,3 +21,4 @@ block content
               td
                 form(method='POST' action='/delete')
                   button.remove-doc.btn.btn-danger.col-xs-12(type="submit" data-id=vol._id) Delete
+            

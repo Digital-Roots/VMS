@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('file-system');
 const Staff = require('../models/staff');
 const Volunteer =  require('../models/volunteer');
 const mid = require('../middleware');
@@ -48,16 +49,16 @@ router.get('/view', mid.loggedIn, function(req, res, next){
     .exec((err, vol) => {
       res.render('view', {vols: vol});
     });
-    }
-  })
+  }
+})
 
 
-  router.post('/delete', function(req, res, next) {
-    let userId = req.body.userId || req.query.userId;
-    Volunteer.deleteOne({_id: userId}, function(err, res) {
-      if (err) { res.json({"err": err});
-    }
-  });
+router.post('/delete', function(req, res, next) {
+  let userId = req.body.userId || req.query.userId;
+  Volunteer.deleteOne({_id: userId}, function(err, res) {
+    if (err) { res.json({"err": err});
+  }
+});
   res.redirect('view');
 });
 
@@ -240,4 +241,14 @@ router.post('/addstaff', function(req,res,next){
       }
     });
 
+
+//exports
+router.post('/export', function(req, res, next){
+  Volunteer.find({}).exec()
+  .then(function(docs) {
+    Volunteer.csvReadStream(docs)
+    .pipe(fs.createWriteStream('volunteers.csv'))
+    .on('end', res.download('volunteers.csv'));
+  });
+});
     module.exports = router;
