@@ -188,15 +188,14 @@ router.post('/addstaff', function(req,res,next){
     });
 
     router.get('/firstuser',  function(req, res, next){
-      // Staff.countDocuments(function(err, count){
-      //   if(count > 0){
-      //     return res.redirect('/');
-      //   }else{
-      //     return res.render('firstuser');
-      //   }
-      // })
-      return res.render('firstuser');
-    })
+      Staff.countDocuments(function(err, count){
+        if(count > 0){
+          return res.redirect('/');
+        }else{
+          return res.render('firstuser');
+        }
+      })
+    });
 
 
 
