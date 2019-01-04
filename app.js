@@ -52,4 +52,5 @@ app.use(function(err, req, res, next){
 
 app.listen(port, function(){
   console.log('Express app listening on ', port);
+  console.log('DB connected on', process.env.MONGODB_URI);
 })
